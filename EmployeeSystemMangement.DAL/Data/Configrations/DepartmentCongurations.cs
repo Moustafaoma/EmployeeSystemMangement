@@ -20,12 +20,10 @@ namespace EmployeeSystemMangement.DAL.Data.Configrations
                 .ValueGeneratedOnAdd()
                 .UseIdentityColumn(10, 10);
 
-            // Configure Name with max length 50 and required
             builder.Property(d => d.Name)
                 .HasMaxLength(50)
                 .IsRequired();
 
-            // Configure Code with max length 50 and required
             builder.Property(d => d.Code)
                 .HasMaxLength(50)
                 .IsRequired();
