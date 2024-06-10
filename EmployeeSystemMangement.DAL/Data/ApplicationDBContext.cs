@@ -11,14 +11,14 @@ namespace EmployeeSystemMangement.DAL.Data
 {
     public class ApplicationDBContext:DbContext
     {
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options):base(options)
+        {
+            
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=.;Database=EmployeeSystemDB;Trusted_Connection=True;TrustServerCertificate=True;");
         }
         public DbSet<Department> Departments { get; set; }
 
