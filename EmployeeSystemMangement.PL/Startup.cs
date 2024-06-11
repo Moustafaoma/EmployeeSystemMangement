@@ -1,3 +1,5 @@
+using EmployeeSystemMangement.BLL.Interfaces;
+using EmployeeSystemMangement.BLL.Repositories;
 using EmployeeSystemMangement.DAL.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +32,7 @@ namespace EmployeeSystemMangement.PL
 
 				 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnections"))
 				 );
+			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
