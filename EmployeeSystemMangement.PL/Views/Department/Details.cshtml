@@ -1,0 +1,56 @@
+﻿@model EmployeeSystemMangement.DAL.Entities.Department
+
+@{
+    ViewData["Title"] = "Department Details";
+}
+<style>
+    /* Custom styles for Department Details view */
+    .card {
+        border-radius: 10px;
+    }
+
+    .card-header {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .card-body dl dt {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .card-body dl dd {
+        margin-bottom: 10px;
+    }
+
+    .btn-secondary {
+        margin-top: 20px;
+    }
+
+</style>
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2>Department Details</h2>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">@Model.Id</dd>
+
+                <dt class="col-sm-3">Code</dt>
+                <dd class="col-sm-9">@Model.Code</dd>
+
+                <dt class="col-sm-3">Name</dt>
+                <dd class="col-sm-9">@Model.Name</dd>
+
+                <dt class="col-sm-3">Date of Creation</dt>
+                <dd class="col-sm-9">@Model.DateOfCreation?.ToString("d")</dd>
+            </dl>
+            
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit </a> |
+            <a asp-action="Index" class="btn btn-secondary" style="margin-top:0px">Back to List</a>
+        </div>
+    </div>
+</div>
