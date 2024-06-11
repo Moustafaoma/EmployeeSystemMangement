@@ -1,5 +1,6 @@
 ﻿using EmployeeSystemMangement.BLL.Interfaces;
 using EmployeeSystemMangement.BLL.Repositories;
+using EmployeeSystemMangement.DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
@@ -18,6 +19,22 @@ namespace EmployeeSystemMangement.PL.Controllers
             if(departments.Count()==0)
                 return NotFound("No Department Found");
             return View(departments);
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Department department)
+        {
+            if(ModelState.IsValid)
+            {
+               var count= _departmentRepository.Add(department);
+                if(count>0)
+                    return RedirectToAction(nameof(Index));
+            }
+            return View(department);
         }
     }
 }
