@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace EmployeeSystemMangement.BLL.Interfaces
 {
-    public interface IDepartmentRepository: IBaseGenericRepository<Department>
+    public interface IEmployeeRepository: IBaseGenericRepository<Employee>
     {
-        //Specific Method for Department
+        IQueryable<Employee> GetEmployeeByAddress(string address);
     }
 }

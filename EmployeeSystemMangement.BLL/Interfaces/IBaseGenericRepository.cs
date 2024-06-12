@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace EmployeeSystemMangement.BLL.Interfaces
 {
-    public interface IDepartmentRepository: IBaseGenericRepository<Department>
+    public interface IBaseGenericRepository<T> where T : BaseEntity
     {
-        //Specific Method for Department
+        IEnumerable<T> GetAll();
+        T GetById(int id);
+        int Add(T Entity); 
+        int Update(T Entity);
+        int Delete(T Entity);
     }
 }
