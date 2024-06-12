@@ -10,38 +10,18 @@ using System.Threading.Tasks;
 
 namespace EmployeeSystemMangement.BLL.Repositories
 {
-    public class EmployeeRepository:IEmployeeRepository
+    public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
     {
-        private readonly ApplicationDBContext _context;
-        public EmployeeRepository(ApplicationDBContext context)
+       
+        public EmployeeRepository(ApplicationDBContext context):base(context)
         {
-            _context = context;
-        }
 
-        public IEnumerable<Employee> GetAll()
-        {
-            return _context.Employees.AsNoTracking().ToList();
         }
-        public Employee GetById(int id)
-        {
-            return _context.Employees.Find(id);
-        }
-        public int Add(Employee Entity)
-        {
-            _context.Employees.Add(Entity);
-            return _context.SaveChanges();
-        }
-        public int Update(Employee Entity)
-        {
-            _context.Employees.Update(Entity);
-            return _context.SaveChanges();
-        }
-        public int Delete(Employee Entity)
-        {
-            _context.Remove(Entity);
-            return _context.SaveChanges();
-        }
+       
 
-
+        public IQueryable<Employee> GetEmployeeByAddress(string address) =>
+             _context.Employees.Where(e => e.Address.Contains(address));
+  
+        
     }
 }

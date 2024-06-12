@@ -24,9 +24,8 @@ namespace EmployeeSystemMangement.DAL.Entities
 
         PartTime = 2
     }
-    public class Employee
+    public class Employee:BaseEntity
     {
-        public int Id { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -54,7 +53,7 @@ namespace EmployeeSystemMangement.DAL.Entities
         [Display(Name = "Hiring Date")]
         public DateTime HiringDate { get; set; }
         public DateTime CreationDate { get; set; }= DateTime.Now;
-        public bool IsDeleted { get; set; } = false;
-
+        public bool IsDeleted { get; set; } = false; ///Soft Delete
+         
     }
 }
