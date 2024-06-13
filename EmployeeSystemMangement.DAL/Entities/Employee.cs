@@ -35,7 +35,6 @@ namespace EmployeeSystemMangement.DAL.Entities
         [Range(22,35)]
         public int? Age { get; set; }
 
-        [RegularExpression(@"^\d+-[a-zA-Z]+-[a-zA-Z]+-[a-zA-Z]+$", ErrorMessage = "Address must match the pattern '123-street-city-country'.")]
         public string Address { get; set; }
 
         [DataType(DataType.Currency)]
@@ -43,7 +42,9 @@ namespace EmployeeSystemMangement.DAL.Entities
 
         [Display(Name ="Is Active")]
         public bool IsActive { get; set; }
-        [EmailAddress]
+        [Required(ErrorMessage = "The Email field is required.")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address.")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]{5,}@(gmail\.com|yahoo\.com|hotmail\.com|outlook\.com|icloud\.com|protonmail\.com)$", ErrorMessage = "The email must have at least 5 characters before the '@' symbol and must be a valid domain (gmail.com, yahoo.com, hotmail.com, outlook.com, icloud.com, protonmail.com).")]
         public string Email { get; set; }
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set; }
