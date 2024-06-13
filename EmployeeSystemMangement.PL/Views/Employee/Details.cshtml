@@ -1,0 +1,54 @@
+﻿@model EmployeeSystemMangement.DAL.Entities.Employee
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2>Employee Details</h2>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                @* <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">@Model.Id</dd> *@
+
+                <dt class="col-sm-3">Name</dt>
+                <dd class="col-sm-9">@Model.Name</dd>
+
+                <dt class="col-sm-3">Age</dt>
+                <dd class="col-sm-9">@Model.Age</dd>
+
+                <dt class="col-sm-3">Address</dt>
+                <dd class="col-sm-9">@Model.Address</dd>
+
+                <dt class="col-sm-3">Salary</dt>
+                <dd class="col-sm-9">@Model.Salary.ToString("C")</dd>
+
+                <dt class="col-sm-3">Is Active</dt>
+                <dd class="col-sm-9">@Model.IsActive</dd>
+
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@Model.Email</dd>
+
+                <dt class="col-sm-3">Gender</dt>
+                <dd class="col-sm-9">@Model.Gender</dd>
+
+                <dt class="col-sm-3">Employee Type</dt>
+                <dd class="col-sm-9">@Model.EmployeeType</dd>
+
+                <dt class="col-sm-3">Phone Number</dt>
+                <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+                <dt class="col-sm-3">Hiring Date</dt>
+                <dd class="col-sm-9">@Model.HiringDate.ToString("d")</dd>
+
+                <dt class="col-sm-3">Creation Date</dt>
+                <dd class="col-sm-9">@Model.CreationDate.ToString("d")</dd>
+
+               @*  <dt class="col-sm-3">Is Deleted</dt>
+                <dd class="col-sm-9">@Model.IsDeleted</dd> *@
+            </dl>
+
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a> |
+            <a asp-action="Index" class="btn btn-secondary" style="margin-top:0px">Back to List</a>
+        </div>
+    </div>
+</div>
