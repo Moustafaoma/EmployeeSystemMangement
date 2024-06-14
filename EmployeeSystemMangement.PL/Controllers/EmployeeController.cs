@@ -50,7 +50,11 @@ namespace EmployeeSystemMangement.PL.Controllers
                 {
                     var count = _employeeRepository.Add(employee);
                     if (count > 0)
+                    {
+                        TempData["Message"] = "This Employee created sucessfully.. ";
                         return RedirectToAction(nameof(Index));
+
+                    }
                 }
                 catch (Exception ex)
                 {

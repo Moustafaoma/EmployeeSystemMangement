@@ -3,6 +3,12 @@
 @{
     ViewData["Title"] = "Employee";
 }
+@if(@TempData["Message"] is not null){
+<div class="alert alert-success">
+    @TempData["Message"]
+</div>
+
+}
 <style>
     table {
         font-family: Arial, sans-serif;
