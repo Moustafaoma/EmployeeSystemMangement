@@ -1,6 +1,7 @@
 using EmployeeSystemMangement.BLL.Interfaces;
 using EmployeeSystemMangement.BLL.Repositories;
 using EmployeeSystemMangement.DAL.Data;
+using EmployeeSystemMangement.PL.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,8 +33,7 @@ namespace EmployeeSystemMangement.PL
 
 				 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnections"))
 				 );
-			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+			services.AddApplicationServicesExtensions();
 
         }
 

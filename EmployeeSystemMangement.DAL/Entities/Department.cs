@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,5 +18,7 @@ namespace EmployeeSystemMangement.DAL.Entities
         [Required(ErrorMessage = "Date is Required.")]
 
         public DateTime? DateOfCreation { get; set; }
+        [InverseProperty("Department")]
+        public ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
     }
 }
