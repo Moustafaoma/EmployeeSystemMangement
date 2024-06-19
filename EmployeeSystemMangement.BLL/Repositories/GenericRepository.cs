@@ -20,6 +20,10 @@ namespace EmployeeSystemMangement.BLL.Repositories
 
         public IEnumerable<T> GetAll()
         {
+            //Its Solution By Specific Design pattern
+            if(typeof(T)==typeof(Employee))
+                return (IEnumerable<T>)_context.Employees.Include(e=>e.Department).AsNoTracking().ToList();
+
             return _context.Set<T>().AsNoTracking().ToList();
         }
         public T GetById(int id)

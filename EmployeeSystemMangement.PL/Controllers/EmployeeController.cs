@@ -12,10 +12,12 @@ namespace EmployeeSystemMangement.PL.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IDepartmentRepository _departmentRepository;
         private readonly IWebHostEnvironment _env;
-        public EmployeeController(IEmployeeRepository employeeRepository, IWebHostEnvironment env)
+        public EmployeeController(IEmployeeRepository employeeRepository,IDepartmentRepository departmentRepository, IWebHostEnvironment env)
         {
             _employeeRepository = employeeRepository;
+            _departmentRepository = departmentRepository;
             _env = env;
         }
         public IActionResult Index()
@@ -38,6 +40,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         }
         public IActionResult Create()
         {
+            ViewBag.departments = _departmentRepository.GetAll();
             return View();
         }
         [HttpPost]
@@ -70,6 +73,8 @@ namespace EmployeeSystemMangement.PL.Controllers
         }
         public IActionResult Edit(int? id,string viewName)
         {
+            ViewBag.departments = _departmentRepository.GetAll();
+
             return Details(id,viewName);
         }
         [HttpPost]
