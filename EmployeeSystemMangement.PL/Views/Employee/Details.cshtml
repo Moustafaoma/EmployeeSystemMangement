@@ -34,8 +34,17 @@
                 <dt class="col-sm-3">Employee Type</dt>
                 <dd class="col-sm-9">@Model.EmployeeType</dd>
 
-                <dt class="col-sm-3">Phone Number</dt>
-                <dd class="col-sm-9">@Model.PhoneNumber</dd>
+                <dt class="col-sm-3">Deprtment</dt>
+                @if(Model.Department?.Name ==null)
+                {
+                    <dd class="col-sm-9">"He Is still new; He hasn't been assigned to a department yet.</dd>
+
+                }
+                else
+                {
+                    <dd class="col-sm-9">@Model.Department.Name</dd>
+
+                }
 
                 <dt class="col-sm-3">Hiring Date</dt>
                 <dd class="col-sm-9">@Model.HiringDate.ToString("d")</dd>

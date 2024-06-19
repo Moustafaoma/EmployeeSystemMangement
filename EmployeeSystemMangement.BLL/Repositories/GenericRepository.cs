@@ -28,7 +28,11 @@ namespace EmployeeSystemMangement.BLL.Repositories
         }
         public T GetById(int id)
         {
-            return _context.Set<T>().Find(id);
+            //Its Solution By Specific Design pattern
+            if (typeof(T) == typeof(Employee))
+                return _context.Employees.Include(_e => _e.Department).FirstOrDefault(e => e.Id == id) as T;
+
+                return _context.Set<T>().Find(id);
         }
         public int Add(T Entity)
         {
