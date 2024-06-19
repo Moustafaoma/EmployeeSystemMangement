@@ -5,5 +5,6 @@ Authentication: Secure login and registration functionality.
 Authorization: Role-based access control.
 Password Reset: Email confirmation for password reset.
 Data Access: Utilizes the Generic Repository and Unit of Work patterns for efficient and maintainable data access.
+Auto Mapping: iam using Auto mapper library
 Architecture: Follows the three-tier architecture pattern, separating the application into Presentation, Business Logic, and Data Access layers.
 This structure ensures a robust, maintainable, and scalable solution for managing company data.
