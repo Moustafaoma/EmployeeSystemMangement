@@ -26,16 +26,32 @@ namespace EmployeeSystemMangement.PL.Controllers
             _env = env;
             _mapper = mapper;
         }
-        public IActionResult Index()
+        public IActionResult Index(string name)
         {
+            IEnumerable<Employee> employees;
+            IEnumerable<EmployeeViewModel> mappedEmployees;
 
-            var employees = _employeeRepository.GetAll();
-            var mappedEmployees = _mapper.Map<System.Collections.Generic.IEnumerable<Employee>,  IEnumerable<EmployeeViewModel>>(employees);
+            if (string.IsNullOrEmpty(name))
+            {
+                 employees = _employeeRepository.GetAll();
+                mappedEmployees = _mapper.Map<System.Collections.Generic.IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
 
-            if (mappedEmployees.Count()==0)
-                return NotFound("No employee found");
+                if (mappedEmployees.Count() == 0)
+                    return NotFound("No employee found");
 
-            return View(mappedEmployees);
+                return View(mappedEmployees);
+            }
+            else
+            {
+                 employees = _employeeRepository.GetEmployeeByName(name.ToLower());
+                 mappedEmployees = _mapper.Map<System.Collections.Generic.IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
+
+                if (mappedEmployees.Count() == 0)
+                    return NotFound("No employee found");
+
+                return View(mappedEmployees);
+            }
+
         }
         public IActionResult Details(int?id,string viewName="Details")
         {
