@@ -34,7 +34,7 @@ namespace EmployeeSystemMangement.PL
 
 				 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnections"))
 				 );
-			services.AddApplicationServicesExtensions();
+			services.AddApplicationServicesExtensions(); 
 			services.AddAutoMapper(m => m.AddProfile(new EmployeeProfile()));
 
         }

@@ -8,8 +8,9 @@ namespace EmployeeSystemMangement.PL.Extensions
     {
         public static void AddApplicationServicesExtensions(this IServiceCollection services)
         {
-            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            //services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            //services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }

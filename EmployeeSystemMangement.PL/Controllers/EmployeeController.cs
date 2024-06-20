@@ -15,14 +15,12 @@ namespace EmployeeSystemMangement.PL.Controllers
 {
     public class EmployeeController : Controller
     {
-        private readonly IEmployeeRepository _employeeRepository;
-        private readonly IDepartmentRepository _departmentRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _env;
         private readonly IMapper _mapper;
-        public EmployeeController(IEmployeeRepository employeeRepository,IDepartmentRepository departmentRepository, IWebHostEnvironment env,IMapper mapper)
+        public EmployeeController(IUnitOfWork unitOfWork, IWebHostEnvironment env,IMapper mapper)
         {
-            _employeeRepository = employeeRepository;
-            _departmentRepository = departmentRepository;
+           _unitOfWork = unitOfWork;
             _env = env;
             _mapper = mapper;
         }
@@ -33,7 +31,7 @@ namespace EmployeeSystemMangement.PL.Controllers
 
             if (string.IsNullOrEmpty(name))
             {
-                 employees = _employeeRepository.GetAll();
+                 employees = _unitOfWork.EmployeeRepository.GetAll();
                 mappedEmployees = _mapper.Map<System.Collections.Generic.IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
 
                 if (mappedEmployees.Count() == 0)
@@ -43,7 +41,7 @@ namespace EmployeeSystemMangement.PL.Controllers
             }
             else
             {
-                 employees = _employeeRepository.GetEmployeeByName(name.ToLower());
+                 employees = _unitOfWork.EmployeeRepository.GetEmployeeByName(name.ToLower());
                  mappedEmployees = _mapper.Map<System.Collections.Generic.IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
 
                 if (mappedEmployees.Count() == 0)
@@ -57,7 +55,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         {
             if (!id.HasValue)
                 return BadRequest();
-            var employee=_employeeRepository.GetById(id.Value);
+            var employee=_unitOfWork.EmployeeRepository.GetById(id.Value);
             var mappedEmployee = _mapper.Map<Employee, EmployeeViewModel>(employee);
             if (mappedEmployee is null)
                 return NotFound();
@@ -66,7 +64,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         }
         public IActionResult Create()
         {
-            ViewBag.departments = _departmentRepository.GetAll();
+            ViewBag.departments = _unitOfWork.DepartmentRepository.GetAll();
             return View();
         }
         [HttpPost]
@@ -89,7 +87,8 @@ namespace EmployeeSystemMangement.PL.Controllers
                     //    PhoneNumber = Vmemployee.PhoneNumber,
                     //};
                     var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
-                    var count = _employeeRepository.Add(mappedEmployee);
+                    _unitOfWork.EmployeeRepository.Add(mappedEmployee);
+                    var count = _unitOfWork.Complete();
                     if (count > 0)
                     {
                         TempData["Message"] = "This Employee created sucessfully.. ";
@@ -111,7 +110,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         }
         public IActionResult Edit(int? id,string viewName)
         {
-            ViewBag.departments = _departmentRepository.GetAll();
+            ViewBag.departments = _unitOfWork.DepartmentRepository.GetAll();
 
             return Details(id,viewName);
         }
@@ -127,7 +126,8 @@ namespace EmployeeSystemMangement.PL.Controllers
             {
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
 
-                _employeeRepository.Update(mappedEmployee);
+                _unitOfWork.EmployeeRepository.Update(mappedEmployee);
+                _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -151,7 +151,8 @@ namespace EmployeeSystemMangement.PL.Controllers
             try
             {
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
-                _employeeRepository.Delete(mappedEmployee);
+                _unitOfWork.EmployeeRepository.Delete(mappedEmployee);
+                _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
