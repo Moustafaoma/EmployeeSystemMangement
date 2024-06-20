@@ -11,16 +11,16 @@ namespace EmployeeSystemMangement.PL.Controllers
 {
     public class DepartmentController : Controller
     {
-        private readonly IDepartmentRepository _departmentRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _env;
-        public DepartmentController(IDepartmentRepository departmentRepository, IWebHostEnvironment env)
+        public DepartmentController(IUnitOfWork unitOfWork, IWebHostEnvironment env)
         {
-            _departmentRepository = departmentRepository ;
+            _unitOfWork = unitOfWork;
             _env = env;
         }
         public IActionResult Index()
         {
-            var departments = _departmentRepository.GetAll();
+            var departments = _unitOfWork.DepartmentRepository.GetAll();
             if(departments.Count()==0)
                 return NotFound("No Department Found");
             return View(departments);
@@ -29,7 +29,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         {
             if (id == null)
                 return new BadRequestResult(); //400
-            var department=_departmentRepository.GetById(id.Value);
+            var department=_unitOfWork.DepartmentRepository.GetById(id.Value);
             if (department is null)
                 return NotFound("Not Dept found"); //405
             return View(viewName,department);
@@ -45,8 +45,9 @@ namespace EmployeeSystemMangement.PL.Controllers
         {
             if(ModelState.IsValid)
             {
-               var count= _departmentRepository.Add(department);
-                if(count>0)
+                _unitOfWork.DepartmentRepository.Add(department);
+                var count = _unitOfWork.Complete();
+                if (count>0)
                     return RedirectToAction(nameof(Index));
             }
             return View(department);
@@ -69,7 +70,9 @@ namespace EmployeeSystemMangement.PL.Controllers
                 return View(department);
             try
             {
-                _departmentRepository.Update(department);
+                _unitOfWork.DepartmentRepository.Update(department);
+                _unitOfWork.Complete();
+
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -95,7 +98,8 @@ namespace EmployeeSystemMangement.PL.Controllers
         {
             try
             {
-                _departmentRepository.Delete(department);
+                _unitOfWork.DepartmentRepository.Delete(department);
+                _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

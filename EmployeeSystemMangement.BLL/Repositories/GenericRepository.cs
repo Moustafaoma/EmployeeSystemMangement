@@ -34,20 +34,17 @@ namespace EmployeeSystemMangement.BLL.Repositories
 
                 return _context.Set<T>().Find(id);
         }
-        public int Add(T Entity)
+        public void Add(T Entity)
         {
             _context.Set<T>().Add(Entity);
-            return _context.SaveChanges();
         }
-        public int Update(T Entity)
+        public void Update(T Entity)
         {
             _context.Set<T>().Update(Entity);
-            return _context.SaveChanges();
         }
-        public int Delete(T Entity)
+        public void Delete(T Entity)
         {
             _context.Remove(Entity);
-            return _context.SaveChanges();
         }
 
     }

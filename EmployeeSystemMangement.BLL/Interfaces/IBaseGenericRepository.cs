@@ -11,8 +11,8 @@ namespace EmployeeSystemMangement.BLL.Interfaces
     {
         IEnumerable<T> GetAll();
         T GetById(int id);
-        int Add(T Entity); 
-        int Update(T Entity);
-        int Delete(T Entity);
+        void Add(T Entity); 
+        void Update(T Entity);
+        void Delete(T Entity);
     }
 }
