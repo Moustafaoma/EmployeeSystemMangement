@@ -9,6 +9,6 @@ namespace EmployeeSystemMangement.BLL.Interfaces
 {
     public interface IEmployeeRepository: IBaseGenericRepository<Employee>
     {
-        IQueryable<Employee> GetEmployeeByAddress(string address);
+        IQueryable<Employee> GetEmployeeByName(string name);
     }
 }

@@ -19,8 +19,8 @@ namespace EmployeeSystemMangement.BLL.Repositories
         }
        
 
-        public IQueryable<Employee> GetEmployeeByAddress(string address) =>
-             _context.Employees.Where(e => e.Address.Contains(address));
+        public IQueryable<Employee> GetEmployeeByName(string name) =>
+             _context.Employees.Where(e => e.Name.ToLower().Contains(name));
   
         
     }
