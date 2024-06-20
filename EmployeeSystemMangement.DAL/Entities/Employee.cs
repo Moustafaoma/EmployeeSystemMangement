@@ -30,22 +30,15 @@ namespace EmployeeSystemMangement.DAL.Entities
 
         [Required]
         [MaxLength(50)]
-        [MinLength(5)]
         public string Name { get; set; }
 
-        [Range(22,35)]
         public int? Age { get; set; }
 
         public string Address { get; set; }
-
-        [DataType(DataType.Currency)]
         public decimal Salary { get; set; }
 
         [Display(Name ="Is Active")]
         public bool IsActive { get; set; }
-        [Required(ErrorMessage = "The Email field is required.")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address.")]
-        [RegularExpression(@"^[a-zA-Z0-9._%+-]{5,}@(gmail\.com|yahoo\.com|hotmail\.com|outlook\.com|icloud\.com|protonmail\.com)$", ErrorMessage = "The email must have at least 5 characters before the '@' symbol and must be a valid domain (gmail.com, yahoo.com, hotmail.com, outlook.com, icloud.com, protonmail.com).")]
         public string Email { get; set; }
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set; }
