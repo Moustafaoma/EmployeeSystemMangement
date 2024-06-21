@@ -20,7 +20,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         }
         public IActionResult Index()
         {
-            var departments = _unitOfWork.DepartmentRepository.GetAll();
+            var departments = _unitOfWork.Repository<Department>().GetAll();
             if(departments.Count()==0)
                 return NotFound("No Department Found");
             return View(departments);
@@ -29,7 +29,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         {
             if (id == null)
                 return new BadRequestResult(); //400
-            var department=_unitOfWork.DepartmentRepository.GetById(id.Value);
+            var department=_unitOfWork.Repository<Department>().GetById(id.Value);
             if (department is null)
                 return NotFound("Not Dept found"); //405
             return View(viewName,department);
@@ -45,7 +45,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         {
             if(ModelState.IsValid)
             {
-                _unitOfWork.DepartmentRepository.Add(department);
+                _unitOfWork.Repository<Department>().Add(department);
                 var count = _unitOfWork.Complete();
                 if (count>0)
                     return RedirectToAction(nameof(Index));
@@ -70,7 +70,7 @@ namespace EmployeeSystemMangement.PL.Controllers
                 return View(department);
             try
             {
-                _unitOfWork.DepartmentRepository.Update(department);
+                _unitOfWork.Repository<Department>().Update(department);
                 _unitOfWork.Complete();
 
                 return RedirectToAction(nameof(Index));
@@ -98,7 +98,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         {
             try
             {
-                _unitOfWork.DepartmentRepository.Delete(department);
+                _unitOfWork.Repository<Department>().Delete(department);
                 _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }

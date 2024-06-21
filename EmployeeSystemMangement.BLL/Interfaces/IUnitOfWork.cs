@@ -1,4 +1,5 @@
 ﻿using EmployeeSystemMangement.BLL.Repositories;
+using EmployeeSystemMangement.DAL.Entities;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,11 @@ namespace EmployeeSystemMangement.BLL.Interfaces
 {
     public interface IUnitOfWork:IDisposable 
     {
-        IEmployeeRepository EmployeeRepository { get; set; }
-        IDepartmentRepository DepartmentRepository { get; set; }
+        //IEmployeeRepository EmployeeRepository { get; set; }
+        //IDepartmentRepository DepartmentRepository { get; set; }
+        IBaseGenericRepository<T> Repository<T>() where T : BaseEntity;
         int Complete();
+
         
     }
 }
