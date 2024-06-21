@@ -28,10 +28,10 @@ namespace EmployeeSystemMangement.PL.Controllers
         {
             IEnumerable<Employee> employees;
             IEnumerable<EmployeeViewModel> mappedEmployees;
-
+            var employeeRepo = _unitOfWork.Repository<Employee>() as EmployeeRepository;
             if (string.IsNullOrEmpty(name))
             {
-                 employees = _unitOfWork.EmployeeRepository.GetAll();
+                 employees = _unitOfWork.Repository<Employee>().GetAll();
                 mappedEmployees = _mapper.Map<System.Collections.Generic.IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
 
                 if (mappedEmployees.Count() == 0)
@@ -41,7 +41,7 @@ namespace EmployeeSystemMangement.PL.Controllers
             }
             else
             {
-                 employees = _unitOfWork.EmployeeRepository.GetEmployeeByName(name.ToLower());
+                 employees =employeeRepo.GetEmployeeByName(name.ToLower());
                  mappedEmployees = _mapper.Map<System.Collections.Generic.IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
 
                 if (mappedEmployees.Count() == 0)
@@ -55,7 +55,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         {
             if (!id.HasValue)
                 return BadRequest();
-            var employee=_unitOfWork.EmployeeRepository.GetById(id.Value);
+            var employee=_unitOfWork.Repository<Employee>().GetById(id.Value);
             var mappedEmployee = _mapper.Map<Employee, EmployeeViewModel>(employee);
             if (mappedEmployee is null)
                 return NotFound();
@@ -64,7 +64,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         }
         public IActionResult Create()
         {
-            ViewBag.departments = _unitOfWork.DepartmentRepository.GetAll();
+            ViewBag.departments = _unitOfWork.Repository<Department>().GetAll();
             return View();
         }
         [HttpPost]
@@ -87,7 +87,7 @@ namespace EmployeeSystemMangement.PL.Controllers
                     //    PhoneNumber = Vmemployee.PhoneNumber,
                     //};
                     var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
-                    _unitOfWork.EmployeeRepository.Add(mappedEmployee);
+                    _unitOfWork.Repository<Employee>().Add(mappedEmployee);
                     var count = _unitOfWork.Complete();
                     if (count > 0)
                     {
@@ -110,7 +110,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         }
         public IActionResult Edit(int? id,string viewName)
         {
-            ViewBag.departments = _unitOfWork.DepartmentRepository.GetAll();
+            ViewBag.departments = _unitOfWork.Repository<Department>().GetAll();
 
             return Details(id,viewName);
         }
@@ -126,7 +126,7 @@ namespace EmployeeSystemMangement.PL.Controllers
             {
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
 
-                _unitOfWork.EmployeeRepository.Update(mappedEmployee);
+                _unitOfWork.Repository<Employee>().Update(mappedEmployee);
                 _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
@@ -151,7 +151,7 @@ namespace EmployeeSystemMangement.PL.Controllers
             try
             {
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
-                _unitOfWork.EmployeeRepository.Delete(mappedEmployee);
+                _unitOfWork.Repository<Employee>().Delete(mappedEmployee);
                 _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
