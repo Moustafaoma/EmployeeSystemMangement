@@ -21,7 +21,7 @@ namespace EmployeeSystemMangement.PL.Helpers
             //3 Get the file path (FolderPath + FileName)
             var filePath= Path.Combine(folderPath, fileName);
 
-            //4 Save file As Strams(Data Per time)
+            //4 Save file As Streams(Data Per time)
            using var fileStream = new FileStream(filePath, FileMode.Create);
             file.CopyTo(fileStream);
             return fileName;

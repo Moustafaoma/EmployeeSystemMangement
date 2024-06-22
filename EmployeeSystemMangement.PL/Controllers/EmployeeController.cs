@@ -2,9 +2,11 @@
 using EmployeeSystemMangement.BLL.Interfaces;
 using EmployeeSystemMangement.BLL.Repositories;
 using EmployeeSystemMangement.DAL.Entities;
+using EmployeeSystemMangement.PL.Helpers;
 using EmployeeSystemMangement.PL.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections;
@@ -75,17 +77,7 @@ namespace EmployeeSystemMangement.PL.Controllers
             {
                 try
                 {
-                    //Auto mapping Manually
-                    //var mappedEmployee = new Employee()
-                    //{
-                    //    DepartmentId = Vmemployee.DepartmentId,
-                    //    Age = Vmemployee.Age,
-                    //    CreationDate = Vmemployee.CreationDate,
-                    //    Address = Vmemployee.Address,
-                    //    Email = Vmemployee.Email,
-                    //    Gender = Vmemployee.Gender,
-                    //    PhoneNumber = Vmemployee.PhoneNumber,
-                    //};
+                   Vmemployee.ImageName= DocumentSettings.UploadFile(Vmemployee.Image, "Images");
                     var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
                     _unitOfWork.Repository<Employee>().Add(mappedEmployee);
                     var count = _unitOfWork.Complete();
@@ -150,8 +142,11 @@ namespace EmployeeSystemMangement.PL.Controllers
         {
             try
             {
+                //DocumentSettings.DeleteFile(Vmemployee.ImageName, "Images");
+
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
                 _unitOfWork.Repository<Employee>().Delete(mappedEmployee);
+                
                 _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }

@@ -6,7 +6,7 @@
 <h1>Create New Employee</h1>
 <br />
 <br />
-<form asp-action="Create" method="post" class="form-horizontal">
+<form asp-action="Create" method="post" class="form-horizontal" enctype="multipart/form-data">
     @await Html.PartialAsync("PartialViews/FormUpdateAndCreateForEmoloyeePartial")
     <div class="form-group row">
         <div class="col-sm-10 offset-sm-2">
