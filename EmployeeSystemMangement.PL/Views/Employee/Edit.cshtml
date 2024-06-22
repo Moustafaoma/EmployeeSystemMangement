@@ -4,7 +4,7 @@
 }
 
 <h1>Edit Employee</h1>
-<form asp-action="Edit" method="post" class="form-horizontal">
+<form asp-action="Edit" method="post" class="form-horizontal" enctype="multipart/form-data">
     @await Html.PartialAsync("PartialViews/FormUpdateAndCreateForEmoloyeePartial")
 
     <div class="form-group row">

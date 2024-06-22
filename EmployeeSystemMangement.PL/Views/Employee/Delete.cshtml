@@ -48,6 +48,12 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="/Files/Images/@Model.ImageName" alt="No image"class="img-fluid rounded-circle" />
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Gender)
         </dt>
         <dd class="col-sm-10">

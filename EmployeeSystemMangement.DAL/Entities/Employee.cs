@@ -53,6 +53,7 @@ namespace EmployeeSystemMangement.DAL.Entities
         public int? DepartmentId { get; set; }
         [InverseProperty("Employees")]
         public Department Department { get; set; }
+        public string ImageName {  get; set; }
 
 
     }
