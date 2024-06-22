@@ -116,8 +116,9 @@ namespace EmployeeSystemMangement.PL.Controllers
                 return View(Vmemployee);
             try
             {
-                var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
 
+                Vmemployee.ImageName = DocumentSettings.UploadFile(Vmemployee.Image, "Images");
+                var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
                 _unitOfWork.Repository<Employee>().Update(mappedEmployee);
                 _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
