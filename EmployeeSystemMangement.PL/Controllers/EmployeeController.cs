@@ -147,8 +147,14 @@ namespace EmployeeSystemMangement.PL.Controllers
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
                 _unitOfWork.Repository<Employee>().Delete(mappedEmployee);
                 
-                _unitOfWork.Complete();
-                return RedirectToAction(nameof(Index));
+               var Count= _unitOfWork.Complete();
+                if(Count > 0)
+                {
+                    DocumentSettings.DeleteFile(Vmemployee.ImageName, "Images");
+                    return RedirectToAction(nameof(Index));
+
+                }
+                return View(Vmemployee);
             }
             catch (Exception ex)
             {
