@@ -2,16 +2,17 @@
 @{
     SelectList departmets;
     var viewName = ViewData["Title"] as string;
-    if (viewName == "Edit")
-    {
-         departmets = new SelectList(ViewBag.departments, "Id", "Name", Model.DepartmentId);
+    // if (viewName == "Edit")
+    departmets = new SelectList(ViewBag.departments, "Id", "Name");
+    // {
+    //      departmets = new SelectList(ViewBag.departments, "Id", "Name", Model.DepartmentId);
 
-    }
-    else
-    {
-        departmets = new SelectList(ViewBag.departments, "Id", "Name");
+    // }
+    // else
+    // {
+    //     departmets = new SelectList(ViewBag.departments, "Id", "Name");
 
-    }
+    // }
 
 
 }

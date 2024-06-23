@@ -110,6 +110,7 @@ namespace EmployeeSystemMangement.PL.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit([FromRoute] int id, EmployeeViewModel Vmemployee)
         {
+
             if (id != Vmemployee.Id)
                 return BadRequest();
             if (!ModelState.IsValid)
