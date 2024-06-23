@@ -110,14 +110,16 @@ namespace EmployeeSystemMangement.PL.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit([FromRoute] int id, EmployeeViewModel Vmemployee)
         {
+
             if (id != Vmemployee.Id)
                 return BadRequest();
             if (!ModelState.IsValid)
                 return View(Vmemployee);
             try
             {
-                var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
 
+                Vmemployee.ImageName = DocumentSettings.UploadFile(Vmemployee.Image, "Images");
+                var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
                 _unitOfWork.Repository<Employee>().Update(mappedEmployee);
                 _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
@@ -147,8 +149,14 @@ namespace EmployeeSystemMangement.PL.Controllers
                 var mappedEmployee = _mapper.Map<EmployeeViewModel, Employee>(Vmemployee);
                 _unitOfWork.Repository<Employee>().Delete(mappedEmployee);
                 
-                _unitOfWork.Complete();
-                return RedirectToAction(nameof(Index));
+               var Count= _unitOfWork.Complete();
+                if(Count > 0)
+                {
+                    DocumentSettings.DeleteFile(Vmemployee.ImageName, "Images");
+                    return RedirectToAction(nameof(Index));
+
+                }
+                return View(Vmemployee);
             }
             catch (Exception ex)
             {

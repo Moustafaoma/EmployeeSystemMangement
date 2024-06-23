@@ -86,8 +86,9 @@
        
     </dl>
 
-    <form asp-action="Delete">
+    <form asp-action="Delete" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ImageName" />  @* The best with using TempData *@
         <div class="form-group">
             <input type="submit" value="Delete" class="btn btn-danger" /> |
             <a asp-action="Index" class="btn btn-secondary">Cancel</a>
