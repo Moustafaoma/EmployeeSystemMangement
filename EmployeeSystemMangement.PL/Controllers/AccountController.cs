@@ -1,4 +1,5 @@
-﻿using EmployeeSystemMangement.DAL.Entities;
+﻿using EmployeeSystemMangement.BLL.Interfaces;
+using EmployeeSystemMangement.DAL.Entities;
 using EmployeeSystemMangement.PL.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace EmployeeSystemMangement.PL.Controllers
     {
         private readonly UserManager<ApplicationUsers> _userManager;
         private readonly SignInManager<ApplicationUsers> _signInManager;
-		public AccountController(UserManager<ApplicationUsers> userManager,SignInManager<ApplicationUsers> signInManager)
+		private readonly IEmailSender _emailSender;
+        public AccountController(UserManager<ApplicationUsers> userManager, SignInManager<ApplicationUsers> signInManager, IEmailSender emailSender)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _emailSender = emailSender;
         }
         public IActionResult Register()
         {
@@ -54,9 +57,43 @@ namespace EmployeeSystemMangement.PL.Controllers
 			}
 			return View(model);
 		}
-		//public async Task<IActionResult> LogIn()
-  //      {
+        public IActionResult LogIn()
+        {
+            return View();
+        }
 
-  //      }
+        [HttpPost]
+        public async Task<IActionResult> LogIn(LogInViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user=await _userManager.FindByEmailAsync(model.Email);
+
+				if (user is not null)
+                {
+                    var flag=await _userManager.CheckPasswordAsync(user, model.Password);
+                    if (flag)
+                    {
+						
+						var result = await _signInManager.PasswordSignInAsync(user,model.Password,model.IsRemember,false);
+                        if (result.IsLockedOut)
+                        {
+							ModelState.AddModelError(string.Empty, "Your Account is locked");
+
+						}
+
+						if (result.Succeeded)
+                        {
+                            return RedirectToAction("Index","Home");
+                        }
+
+                    }
+				}
+				ModelState.AddModelError(string.Empty, "Invalid LogIn");
+            }
+            return View(model);
+        }
+
+
 	}
 }
