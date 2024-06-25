@@ -27,5 +27,9 @@
 		<p>Do You have an Account? <a asp-action="LogIn"> Login Now!</a></p>
 	</div>
 
-	
+	@section Scripts {
+		@{
+			await Html.RenderPartialAsync("_ValidationScriptsPartial");
+		}
+	}
 </div>

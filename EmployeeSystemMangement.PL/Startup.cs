@@ -38,16 +38,19 @@ namespace EmployeeSystemMangement.PL
 				 );
 			services.AddApplicationServicesExtensions(); 
 			services.AddAutoMapper(m => m.AddProfile(new EmployeeProfile()));
+
+
 			services.AddIdentity<ApplicationUsers, IdentityRole>(options =>
 			{
 				options.Password.RequiredUniqueChars = 2;
 				options.Password.RequireNonAlphanumeric = false;
 				options.Password.RequiredLength = 6;
-				options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = true;
+				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 			}).AddEntityFrameworkStores<ApplicationDBContext>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // This method gets called by  the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
