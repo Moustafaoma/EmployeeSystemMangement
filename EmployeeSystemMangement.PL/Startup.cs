@@ -1,11 +1,13 @@
 using EmployeeSystemMangement.BLL.Interfaces;
 using EmployeeSystemMangement.BLL.Repositories;
 using EmployeeSystemMangement.DAL.Data;
+using EmployeeSystemMangement.DAL.Entities;
 using EmployeeSystemMangement.PL.Extensions;
 using EmployeeSystemMangement.PL.MappingProfiles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,7 +38,13 @@ namespace EmployeeSystemMangement.PL
 				 );
 			services.AddApplicationServicesExtensions(); 
 			services.AddAutoMapper(m => m.AddProfile(new EmployeeProfile()));
-
+			services.AddIdentity<ApplicationUsers, IdentityRole>(options =>
+			{
+				options.Password.RequiredUniqueChars = 2;
+				options.Password.RequireNonAlphanumeric = false;
+				options.Password.RequiredLength = 6;
+				options.User.RequireUniqueEmail = true;
+			}).AddEntityFrameworkStores<ApplicationDBContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

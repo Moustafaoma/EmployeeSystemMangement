@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeSystemMangement.DAL.Data
 {
-    public class ApplicationDBContext:IdentityDbContext
+    public class ApplicationDBContext:IdentityDbContext<ApplicationUsers>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options):base(options)
         {
@@ -20,7 +20,6 @@ namespace EmployeeSystemMangement.DAL.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            ///ddd
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
           
 
