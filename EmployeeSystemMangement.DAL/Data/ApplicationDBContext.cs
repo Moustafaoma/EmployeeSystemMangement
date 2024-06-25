@@ -20,6 +20,7 @@ namespace EmployeeSystemMangement.DAL.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            ///ddd
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
           
 
