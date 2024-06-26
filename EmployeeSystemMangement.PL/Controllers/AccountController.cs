@@ -12,12 +12,10 @@ namespace EmployeeSystemMangement.PL.Controllers
     {
         private readonly UserManager<ApplicationUsers> _userManager;
         private readonly SignInManager<ApplicationUsers> _signInManager;
-		private readonly IEmailSender _emailSender;
-        public AccountController(UserManager<ApplicationUsers> userManager, SignInManager<ApplicationUsers> signInManager, IEmailSender emailSender)
+        public AccountController(UserManager<ApplicationUsers> userManager, SignInManager<ApplicationUsers> signInManager)
         {
             _signInManager = signInManager;
             _userManager = userManager;
-            _emailSender = emailSender;
         }
         public IActionResult Register()
         {
@@ -93,7 +91,30 @@ namespace EmployeeSystemMangement.PL.Controllers
             }
             return View(model);
         }
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(LogIn));
+        }
+        public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+		public async Task <IActionResult> SendResetPasswordEmail(ForgetPassordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user=await _userManager.FindByNameAsync(model.Email);
+                if(user is not null)
+                {
+                    
+                }
+                ModelState.AddModelError(string.Empty, "This Account not found..");
+            }
+            return View(model);
 
+        }
 
 	}
 }

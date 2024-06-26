@@ -4,6 +4,7 @@ using EmployeeSystemMangement.BLL.Repositories;
 using EmployeeSystemMangement.DAL.Entities;
 using EmployeeSystemMangement.PL.Helpers;
 using EmployeeSystemMangement.PL.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
@@ -15,6 +16,8 @@ using System.Linq;
 
 namespace EmployeeSystemMangement.PL.Controllers
 {
+	[Authorize]
+
     public class EmployeeController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
