@@ -1,6 +1,7 @@
 ﻿using EmployeeSystemMangement.BLL.Interfaces;
 using EmployeeSystemMangement.BLL.Repositories;
 using EmployeeSystemMangement.DAL.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
@@ -9,6 +10,7 @@ using System.Linq;
 
 namespace EmployeeSystemMangement.PL.Controllers
 {
+    [Authorize]
     public class DepartmentController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

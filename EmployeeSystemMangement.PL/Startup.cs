@@ -48,7 +48,16 @@ namespace EmployeeSystemMangement.PL
                 options.User.RequireUniqueEmail = true;
 				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 			}).AddEntityFrameworkStores<ApplicationDBContext>();
-        }
+			services.ConfigureApplicationCookie(options =>
+			{
+				options.ExpireTimeSpan = TimeSpan.FromDays(1);
+			});
+			//services.AddAuthentication(options =>
+			//{
+			//	options.DefaultAuthenticateScheme = "MySchema";
+			//}); //it if iwant Add Configuration of my custom schema token
+          }
+		
 
         // This method gets called by  the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -67,8 +76,9 @@ namespace EmployeeSystemMangement.PL
 			app.UseStaticFiles();
 
 			app.UseRouting();
-
-			app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
+			
 
 			app.UseEndpoints(endpoints =>
 			{
