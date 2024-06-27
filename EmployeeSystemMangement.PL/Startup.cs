@@ -45,9 +45,9 @@ namespace EmployeeSystemMangement.PL
 				options.Password.RequiredUniqueChars = 2;
 				options.Password.RequireNonAlphanumeric = false;
 				options.Password.RequiredLength = 6;
-                options.User.RequireUniqueEmail = true;
+				options.User.RequireUniqueEmail = true;
 				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-			}).AddEntityFrameworkStores<ApplicationDBContext>();
+			}).AddEntityFrameworkStores<ApplicationDBContext>().AddDefaultTokenProviders();
 			services.ConfigureApplicationCookie(options =>
 			{
 				options.ExpireTimeSpan = TimeSpan.FromDays(1);
