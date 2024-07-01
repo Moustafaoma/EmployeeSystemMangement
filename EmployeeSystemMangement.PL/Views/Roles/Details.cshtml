@@ -1,0 +1,31 @@
+﻿@model ApplicationRoles;
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2>Role Details</h2>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                @* <dt class="col-sm-3">ID</dt>
+                <dd class="col-sm-9">@Model.Id</dd> *@
+
+                <dt class="col-sm-3">UserName</dt>
+                <dd class="col-sm-9">@Model.Name</dd>
+
+                <dt class="col-sm-3">CreatedAt</dt>
+                <dd class="col-sm-9">@Model.CreatedAt</dd>
+            </dl>
+
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a> |
+            <a asp-action="Index" class="btn btn-secondary" style="margin-top:0px">Back to List</a>
+        </div>
+    </div>
+</div>
+
+
