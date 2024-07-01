@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EmployeeSystemMangement.PL.Controllers
@@ -15,13 +16,17 @@ namespace EmployeeSystemMangement.PL.Controllers
 	public class RolesController : Controller
 	{
 		private readonly RoleManager<ApplicationRoles> _roleManager;
+        private readonly UserManager<ApplicationUsers> _userManager;
         private readonly IWebHostEnvironment _env;
 
 
-        public RolesController(RoleManager<ApplicationRoles> roleManager,IWebHostEnvironment env)
+        public RolesController(RoleManager<ApplicationRoles> roleManager,IWebHostEnvironment env, UserManager<ApplicationUsers> userManager
+            )
 		{
 			_roleManager = roleManager;
 			_env = env;
+            _userManager = userManager;
+
 		}
 
 		public async Task<IActionResult> Index()
@@ -122,6 +127,7 @@ namespace EmployeeSystemMangement.PL.Controllers
             return await Details(id, "Delete");
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(string id, ApplicationRoles applicationRole)
         {
             try
@@ -145,7 +151,68 @@ namespace EmployeeSystemMangement.PL.Controllers
             }
 
         }
+        public async Task<IActionResult> AddOrRemoveUsers(string roleId)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if (role is null)
+                return BadRequest();
+            ViewBag.roleId = roleId;
+            TempData["RoleName"] = role.Name;
+            var usersInRole = new List<UsersInRoleViewModel>();
+            var users=await _userManager.Users.ToListAsync();
+            foreach (var user in users)
+            {
+                var userInRole = new UsersInRoleViewModel()
+                {
+                    UserName=user.UserName,
+                    UserId=user.Id,
+                };
+                if(await _userManager.IsInRoleAsync(user, role.Name))
+                {
+                    userInRole.IsSelected = true;
+                }
+                else
+                    userInRole.IsSelected = false;
 
+                usersInRole.Add(userInRole);
+            }
+            return View(usersInRole);
+
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddOrRemoveUsers(List<UsersInRoleViewModel> model, string roleName)
+        {
+            if (!await _roleManager.RoleExistsAsync(roleName))
+            {
+                return BadRequest("Role does not exist");
+            }
+            foreach (var user in model)
+            {
+                    var selectedUser = await _userManager.FindByIdAsync(user.UserId);
+                if (user.IsSelected)
+                {
+
+                    if (!await _userManager.IsInRoleAsync(selectedUser, roleName))
+                    {
+                        await _userManager.AddToRoleAsync(selectedUser, roleName);
+                    }
+                }
+                else
+                {
+                    //selectedUser = await _userManager.FindByIdAsync(user.UserId);
+
+                    if (await _userManager.IsInRoleAsync(selectedUser, roleName))
+                    {
+                        await _userManager.RemoveFromRoleAsync(selectedUser, roleName);
+                    }
+                }
+                    
+            }
+            return RedirectToAction("Index", "Roles"); // Adjust the redirection as needed
+
+        }
 
     }
 }
