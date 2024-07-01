@@ -1,0 +1,101 @@
+﻿@model IEnumerable<ApplicationUsers>;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    if(Model.Count()<1){
+        <div>
+        <p> No user found </p>
+        </div>
+    }
+}
+<h1>All Users</h1>
+
+<style>
+    table {
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        word-wrap: break-word; /* Ensure long words break */
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .action-buttons {
+        white-space: nowrap;
+    }
+
+        .action-buttons a {
+            margin-right: 5px;
+        }
+
+    */
+    .action-buttons {
+        white-space: nowrap;
+    }
+
+    .action-buttons a {
+        margin-right: 1px;
+    }
+</style>
+
+<h2>@ViewData["Title"]</h2>
+<br />
+<br />
+
+<div class="row justify-content-center align-items-center mt-5">
+    <form asp-action="Index" class="row col-8 offset-1">
+        <div class="col-8">
+            <input type="text" class="form-control" name="name" placeholder="Search By Name" />
+        </div>
+        @* <div class="col-4">
+        <input type="submit" value="Search" class="btn btn-success" />
+        </div> *@
+    </form>
+</div>
+<br />
+<br />
+
+
+<table class=" table-bordered">
+    <thead>
+        <tr>
+            
+            <th>@Html.DisplayNameFor(model => model.UserName)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+            
+                @* <td>@Html.DisplayFor(modelItem => item.HiringDate)</td> *@
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td class="d-flex justify-content-around">
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-eye"></i>Details</a> |
+                    <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i>Edit</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i>Delete</a>
+                </td>
+            </tr>
+        }
+        }
+    </tbody>
+</table>
+
