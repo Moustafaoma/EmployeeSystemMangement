@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeSystemMangement.DAL.Data
 {
-    public class ApplicationDBContext:IdentityDbContext<ApplicationUsers>
+	public class ApplicationDBContext : IdentityDbContext<ApplicationUsers, ApplicationRoles, string>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options):base(options)
         {

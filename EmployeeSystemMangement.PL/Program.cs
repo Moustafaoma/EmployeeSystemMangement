@@ -31,7 +31,7 @@ namespace EmployeeSystemMangement.PL
             webApplicationBuilder. Services.AddAutoMapper(m => m.AddProfile(new EmployeeProfile()));
 
 
-            webApplicationBuilder.Services.AddIdentity<ApplicationUsers, IdentityRole>(options =>
+            webApplicationBuilder.Services.AddIdentity<ApplicationUsers, ApplicationRoles>(options =>
             {
                 options.Password.RequiredUniqueChars = 2;
                 options.Password.RequireNonAlphanumeric = false;

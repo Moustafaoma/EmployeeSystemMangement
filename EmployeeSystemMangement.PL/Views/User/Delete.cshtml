@@ -33,8 +33,11 @@
 
     </dl>
 
-    <form asp-action="Delete" enctype="multipart/form-data">
-        <input type="hidden" asp-for="Id" />
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="UserName" />
+        <input type="hidden" asp-for="Email" />
+
+
         <div class="form-group">
             <input type="submit" value="Delete" class="btn btn-danger" /> |
             <a asp-action="Index" class="btn btn-secondary">Cancel</a>
