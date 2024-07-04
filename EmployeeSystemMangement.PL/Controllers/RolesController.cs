@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace EmployeeSystemMangement.PL.Controllers
 {
-	[Authorize]
-	public class RolesController : Controller
+    [Authorize(Roles = "Super Admin")]
+    public class RolesController : Controller
 	{
 		private readonly RoleManager<ApplicationRoles> _roleManager;
         private readonly UserManager<ApplicationUsers> _userManager;
@@ -210,9 +210,11 @@ namespace EmployeeSystemMangement.PL.Controllers
                 }
                     
             }
-            return RedirectToAction("Index", "Roles"); // Adjust the redirection as needed
+            return RedirectToAction("Index", "Roles");
+
 
         }
 
+            
     }
 }

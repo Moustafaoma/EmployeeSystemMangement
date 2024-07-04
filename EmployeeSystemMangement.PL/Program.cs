@@ -39,13 +39,13 @@ namespace EmployeeSystemMangement.PL
                 options.User.RequireUniqueEmail = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
             }).AddEntityFrameworkStores<ApplicationDBContext>().AddDefaultTokenProviders();
-            webApplicationBuilder. Services.ConfigureApplicationCookie(options =>
+            webApplicationBuilder.Services.ConfigureApplicationCookie(options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromDays(1);
             });
-            //Services.AddAuthentication(options =>
+            //webApplicationBuilder.Services.AddAuthentication(options =>
             //{
-            //	options.DefaultAuthenticateScheme = "MySchema";
+            //    options.DefaultAuthenticateScheme = "MySchema";
             //}); //it if iwant Add Configuration of my custom schema token
             var app = webApplicationBuilder.Build();
             if (app.Environment.IsDevelopment())
