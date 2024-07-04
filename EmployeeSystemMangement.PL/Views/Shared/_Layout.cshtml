@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity 
+@inject SignInManager<ApplicationUsers> signInManager;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
    
@@ -32,21 +35,30 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Employees</a>
                         </li>
-                        @* @if (User.IsInRole("Admin"))
-                        { *@
+                        @if (User.IsInRole("Admin")){
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
                             </li>
-                            
-                        @* } *@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
-                        </li>
-                       
-                        <ul class="navbar-nav ml-auto">
+                        }
+                        @if (User.IsInRole("Super Admin"))
+                        { 
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+                            </li>
+                        }
+
+                        @if (!signInManager.IsSignedIn(User))
+                        {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Log In</a>
                             </li>
+                            
+                        }
+                        <ul class="navbar-nav ml-auto">
+                            
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">Log Out</a>
                             </li>

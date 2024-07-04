@@ -15,7 +15,8 @@ using System.Threading.Tasks;
 
 namespace EmployeeSystemMangement.PL.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Super Admin,Admin")]
+
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUsers> _userManager;
